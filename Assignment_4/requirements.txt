@@ -1,0 +1,7 @@
+contractions
+Flask
+requests
+scikit-learn
+nltk
+pytest
+pytest-cov

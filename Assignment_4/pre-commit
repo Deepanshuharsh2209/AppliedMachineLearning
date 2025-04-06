@@ -1,0 +1,21 @@
+#!/bin/bash
+# filepath: .git/hooks/pre-commit
+
+# Ensure we are on the 'main' branch
+current_branch=$(git branch --show-current)
+if [ "$current_branch" != "main" ]; then
+    echo "Not on 'main' branch. Skipping tests."
+    exit 0
+fi
+
+# Run pytest for test_docker.py
+echo "Running tests..."
+pytest test_docker.py --cov=test_docker --cov-report=term-missing > coverage.txt
+
+# Check if pytest passed
+if [ $? -ne 0 ]; then
+    echo "Tests failed. Commit aborted."
+    exit 1
+fi
+
+echo "All tests passed. Proceeding with commit."
